@@ -22,9 +22,11 @@ grunt.loadNpmTasks('grunt-component-tree');
 ### Overview
 In your project's Gruntfile, add a section named `component_tree` to the data object passed into `grunt.initConfig()`.
 
+Inside your project's directory of components all files starting with a capital letter within a folder will be treated as a module and added to an object, which is exported by the index.js file. If a file has the same name as the folder it is directly contained by, then this module will be used as an object and other objects will be added to it.
+
 
 #### Configuration
-An index.js file will be places in each directory starting with a capital letter within the directory specified using cwd.
+An index.js file will be placed in each directory starting with a capital letter within the directory specified using cwd.
 
 ```js
 grunt.initConfig({
@@ -35,11 +37,20 @@ grunt.initConfig({
 ```
 
 #### Usage
+```
+src
+|--A
+|  |--A.js
+|  |--X.js
+|  |--index.js
+```
 
 ```js
 var A = require('./A');
 
 var a = new A();
+
+a.x = new A.X()
 
 a.x instanceof A.X; // true
 
