@@ -36,7 +36,7 @@ module.exports = function(grunt) {
       },
       custom_options: {
         includeDir: true,
-        cwd: 'tmp/src/A'
+        cwd: ['tmp/src/A']
       }
 
     },
