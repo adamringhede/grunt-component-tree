@@ -14,7 +14,9 @@ var fs = require('fs-extra');
 module.exports = function(grunt) {
 
   function placeFile(path) {
-    fs.copySync(__dirname + '/lib/autoloader.js', path + '/index.js');
+    try {
+      fs.copySync(__dirname + '/lib/autoloader.js', path + '/index.js');
+    } catch (e) {}
   }
 
   grunt.registerMultiTask('component_tree', 'Makes it easier to access components in large Node projects without having to call require by nesting components/modules', function(done) {
@@ -24,9 +26,12 @@ module.exports = function(grunt) {
       grunt.log.error('A component directory has to be specified using "cwd"');
     }
 
+    if (this.data.includeDir)
+      placeFile(dir);
+
     walk.sync(dir, function(path,stat){
       if (stat.blocks === 0) {
-        // It is a directory
+        // It might be a directory
         placeFile(path);
       }
     });

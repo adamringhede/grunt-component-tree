@@ -35,12 +35,10 @@ module.exports = function(grunt) {
         cwd: 'tmp/src'
       },
       custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!'
-        },
-        cwd: 'tmp/src'
-      }
+        includeDir: true,
+        cwd: 'tmp/src/A'
+      },
+
     },
 
     // Unit tests.
