@@ -25,6 +25,14 @@ var fileExists = require('file-exists');
 */
 
 exports.component_tree = {
+  setUp: function (callback) {
+    try {
+      fs.removeSync('../tmp/src/A/index.js');
+      fs.removeSync('../tmp/src/A/B/index.js');
+    } catch (e) {}
+
+    callback();
+  },
   default_options: function(test) {
     console.log(fileExists.toString());
     test.expect(4);
@@ -40,5 +48,5 @@ exports.component_tree = {
     test.equal(fileExists('tmp/src/A/index.js'), true);
     test.equal(fileExists('tmp/src/A/B/index.js'), true);
     test.done();
-  },
+  }
 };

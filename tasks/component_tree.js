@@ -19,14 +19,12 @@ module.exports = function(grunt) {
     } catch (e) {}
   }
 
-  grunt.registerMultiTask('component_tree', 'Makes it easier to access components in large Node projects without having to call require by nesting components/modules', function(done) {
-    var dir = this.data.cwd;
-
+  function process(dir, includeDir) {
     if (!dir) {
       grunt.log.error('A component directory has to be specified using "cwd"');
     }
 
-    if (this.data.includeDir)
+    if (includeDir)
       placeFile(dir);
 
     walk.sync(dir, function(path,stat){
@@ -35,6 +33,19 @@ module.exports = function(grunt) {
         placeFile(path);
       }
     });
+  }
+
+  grunt.registerMultiTask('component_tree', 'Makes it easier to access components in large Node projects without having to call require by nesting components/modules', function(done) {
+    if (Array.isArray(this.data.cwd)) {
+      var cwds = this.data.cwd;
+      for (var i = 0, l = cwds.length; i < l; i++) {
+        process(cwds[i], this.data.includeDir);
+      }
+    } else {
+      process(this.data.cwd, this.data.includeDir);
+    }
+
+
 
   });
 
