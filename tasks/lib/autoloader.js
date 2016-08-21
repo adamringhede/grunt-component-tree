@@ -30,14 +30,23 @@
     models = {};
   }
 
+  function load(id) {
+    try {
+      return require("./" + id);
+    } catch (e) {
+      console.log("Silently failing to load module.");
+      console.log(e);
+      return {};
+    }
+  }
 
   for (j = 0, len1 = files.length; j < len1; j++) {
     file = files[j];
     if (file !== 'index.js' && /(.js)$/.test(file) && /^[A-Z]+/.test(file[0]) && file !== (moduleName + ".js")) {
       model = file.replace(/(.js)/, '');
-      models[model] = require("./" + model);
+      models[model] = load(model);
     } else if (!/\./.test(file) && /^[A-Z]+/.test(file[0])) {
-      models[file] = require("./" + file);
+      models[file] = load(file);
     }
   }
 

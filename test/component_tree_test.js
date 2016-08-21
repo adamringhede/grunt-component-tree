@@ -31,6 +31,7 @@ exports.component_tree = {
     test.equal(fileExists('tmp/src/index.js'), false);
     test.equal(fileExists('tmp/src/A/index.js'), true);
     test.equal(fileExists('tmp/src/A/B/index.js'), true);
+    require('../tmp/src/A/C');
     test.done();
   },
   custom_options: function(test) {
